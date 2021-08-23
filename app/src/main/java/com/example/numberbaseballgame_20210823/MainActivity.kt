@@ -3,6 +3,7 @@ package com.example.numberbaseballgame_20210823
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Message
+import android.widget.Toast
 import com.example.numberbaseballgame_20210823.adapters.MessageAdapter
 import com.example.numberbaseballgame_20210823.datas.MessageData
 import kotlinx.android.synthetic.main.activity_main.*
@@ -66,6 +67,14 @@ class MainActivity : AppCompatActivity() {
         mMessageList.add(MessageData("${strikeCount}S ${ballCount}B", "CPU"))
         mAdapter.notifyDataSetChanged()
         messageListView.smoothScrollToPosition(mMessageList.size - 1)
+
+        if (strikeCount == 3) {
+            mMessageList.add(MessageData("축하합니다! 정답을 맞췄습니다", "CPU"))
+            mAdapter.notifyDataSetChanged()
+            messageListView.smoothScrollToPosition(mMessageList.size - 1)
+            Toast.makeText(this, "게임을 종료합니다", Toast.LENGTH_SHORT).show()
+            numberEdt.isEnabled = false
+        }
     }
 
     //문제 생성 함수
