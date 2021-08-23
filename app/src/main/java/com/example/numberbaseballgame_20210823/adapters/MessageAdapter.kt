@@ -42,7 +42,7 @@ class MessageAdapter(
         } else {
             cpuMessageLayout.visibility = View.GONE
             userMessageLayout.visibility = View.VISIBLE
-            
+
             userMessageTxt.text = data.content
         }
 

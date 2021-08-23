@@ -21,5 +21,14 @@ class MainActivity : AppCompatActivity() {
         mAdapter = MessageAdapter(this, R.layout.message_list_item, mMessageList)
         messageListView.adapter = mAdapter
 
+        sendButton.setOnClickListener {
+            val inputNumStr = numberEdt.text.toString()
+            val msg = MessageData(inputNumStr, "USER")
+
+            mMessageList.add(msg)
+            mAdapter.notifyDataSetChanged()
+
+            numberEdt.setText("")
+        }
     }
 }
