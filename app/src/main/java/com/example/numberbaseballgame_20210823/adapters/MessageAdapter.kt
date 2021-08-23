@@ -36,9 +36,13 @@ class MessageAdapter(
 
         if (data.writer == "CPU") {
             userMessageLayout.visibility = View.GONE
+            cpuMessageLayout.visibility = View.VISIBLE
+
             cpuMessageTxt.text = data.content
         } else {
             cpuMessageLayout.visibility = View.GONE
+            userMessageLayout.visibility = View.VISIBLE
+            
             userMessageTxt.text = data.content
         }
 
