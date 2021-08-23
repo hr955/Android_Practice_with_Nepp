@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/cpuMessageTxt"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="50dp"
             android:background="@drawable/speech_bubble_other"
             android:gravity="center_vertical"
