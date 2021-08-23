@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
             mAdapter.notifyDataSetChanged()
 
             numberEdt.setText("")
+
+            //리스트뷰 최하단으로 이동
+            messageListView.smoothScrollToPosition(mMessageList.size - 1)
         }
     }
 }
