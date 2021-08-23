@@ -79,9 +79,28 @@ class MainActivity : AppCompatActivity() {
 
     //문제 생성 함수
     private fun makeQuestionNumbers() {
-        mQuestionNumbers.add(4)
-        mQuestionNumbers.add(7)
-        mQuestionNumbers.add(1)
+//        mQuestionNumbers.add(4)
+//        mQuestionNumbers.add(7)
+//        mQuestionNumbers.add(1)
+
+        for (i in 0..2) {
+            while (true) {
+                val randomNum = (Math.random() * 9 + 1).toInt()
+                var isDuplOk = true
+
+                //중복검사
+                for (num in mQuestionNumbers) {
+                    if (num == randomNum) {
+                        isDuplOk = false
+                    }
+                }
+                //중복이 아니라면 -> 배열에 담기
+                if (isDuplOk) {
+                    mQuestionNumbers.add(randomNum)
+                    break;
+                }
+            }
+        }
 
         //환영메세지 채팅창에 띄우기
         mMessageList.add(MessageData("어서오세요", "CPU"))
