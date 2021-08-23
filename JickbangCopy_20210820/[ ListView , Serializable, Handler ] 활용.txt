@@ -1,0 +1,2 @@
+icon - mipmap, manifest
+Handler - postDelayed
