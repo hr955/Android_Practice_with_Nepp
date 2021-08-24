@@ -4,4 +4,4 @@
 <br/>
 
 # 실행 화면
-![image](https://user-images.githubusercontent.com/49020567/130552730-3d7f4839-7da2-46bd-9bbd-adf627a663a6.png)
+![image](https://user-images.githubusercontent.com/49020567/130552838-9d2ae377-9453-494f-bab7-3864ab3794fa.png)
