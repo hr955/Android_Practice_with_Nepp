@@ -1,8 +1,9 @@
 package com.example.pizzaorderapp_20210825
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
 import com.example.pizzaorderapp_20210825.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_edit_nickname.*
 
 class EditNicknameActivity : BaseActivity() {
 
@@ -15,10 +16,13 @@ class EditNicknameActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        TODO("Not yet implemented")
+        endEdtBtn.setOnClickListener {
+            intent.putExtra("Nickname", newNicknameEtd.text.toString())
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
     override fun setValues() {
-        TODO("Not yet implemented")
     }
 }
