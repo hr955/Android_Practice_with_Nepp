@@ -2,6 +2,7 @@
 - ListView 실습
 - Serializable (커스텀 데이터 클래스를 인텐트에 담아 전달하기)
 - Handler ( SplashActivity -> postDelay )
+<br/>
 
 ## 📁 Pizza_Order_App (안드로이드 기초 응용)
 - Fragment + TabLayout + ViewPager 
