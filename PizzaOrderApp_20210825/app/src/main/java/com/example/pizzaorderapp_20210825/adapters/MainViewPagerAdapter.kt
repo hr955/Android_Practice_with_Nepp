@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.pizzaorderapp_20210825.fragments.OrderFragment
 import com.example.pizzaorderapp_20210825.fragments.UserFragment
 
-class mainViewPagerAdapter(val fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class MainViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int = 2
 
     override fun getItem(position: Int): Fragment = when (position) {

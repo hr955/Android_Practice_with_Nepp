@@ -1,13 +1,13 @@
 package com.example.pizzaorderapp_20210825
 
 import android.os.Bundle
-import com.example.pizzaorderapp_20210825.adapters.mainViewPagerAdapter
+import com.example.pizzaorderapp_20210825.adapters.MainViewPagerAdapter
 import com.example.pizzaorderapp_20210825.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-    lateinit var mvpa: mainViewPagerAdapter
+    lateinit var mainViewPagerAdapter: MainViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +23,8 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
-        mvpa = mainViewPagerAdapter(supportFragmentManager)
-        mainViewPager.adapter = mvpa
+        mainViewPagerAdapter = MainViewPagerAdapter(supportFragmentManager)
+        mainViewPager.adapter = mainViewPagerAdapter
         mainTabLayout.setupWithViewPager(mainViewPager)
     }
 }

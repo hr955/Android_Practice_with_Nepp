@@ -15,4 +15,8 @@ class OrderFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_order, container, false)
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
 }

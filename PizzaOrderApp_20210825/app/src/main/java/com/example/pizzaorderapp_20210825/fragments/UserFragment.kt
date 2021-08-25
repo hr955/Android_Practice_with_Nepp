@@ -15,4 +15,8 @@ class UserFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_user, container, false)
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
 }
