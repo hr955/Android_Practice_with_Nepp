@@ -31,7 +31,7 @@ class StoreDetailActivity : BaseActivity() {
     override fun setValues() {
         mStoreData = intent.getSerializableExtra("storeData") as StoreData
 
-        Glide.with(mContext).load(mStoreData.storeLogo).into(storeImg)
+        Glide.with(mContext).load(mStoreData.storeLogoUrl).into(storeImg)
         storeNameTxt.text = mStoreData.storeName
         storeTelNum.text = mStoreData.storeTel
     }

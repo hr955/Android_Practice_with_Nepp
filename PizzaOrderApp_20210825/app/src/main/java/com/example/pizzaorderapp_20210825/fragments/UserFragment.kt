@@ -27,7 +27,10 @@ class UserFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         edtNicknameBtn.setOnClickListener {
-            startActivityForResult(Intent(requireContext(), EditNicknameActivity::class.java), REQUEST_CODE)
+            startActivityForResult(
+                Intent(requireContext(), EditNicknameActivity::class.java),
+                REQUEST_CODE
+            )
         }
 
     }
@@ -35,8 +38,8 @@ class UserFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == REQUEST_CODE){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
                 nicknameTxt.text = data!!.getStringExtra("Nickname")
             }
         }
