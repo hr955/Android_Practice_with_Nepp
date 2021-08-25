@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_tube"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_tube_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PizzaOrderApp_20210825"
         android:usesCleartextTraffic="true">

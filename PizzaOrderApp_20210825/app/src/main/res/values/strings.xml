@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">PizzaOrderApp_20210825</string>
+    <string name="app_name">OrderApp</string>
     <string name="storeName">가게이름</string>
 </resources>
