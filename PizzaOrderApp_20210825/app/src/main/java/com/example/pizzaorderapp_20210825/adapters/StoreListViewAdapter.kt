@@ -34,7 +34,7 @@ class StoreListViewAdapter(
         val storeLogoImg = row.findViewById<ImageView>(R.id.storeLogoImg)
 
         storeNameTxt.text = data.storeName
-        Glide.with(mContext).load(data.storeLogo).circleCrop().into(storeLogoImg)
+        Glide.with(mContext).load(data.storeLogo).into(storeLogoImg)
         return row
     }
 }
