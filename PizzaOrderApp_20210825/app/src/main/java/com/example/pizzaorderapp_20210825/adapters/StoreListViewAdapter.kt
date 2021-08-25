@@ -13,7 +13,7 @@ import com.example.pizzaorderapp_20210825.datas.StoreData
 
 class StoreListViewAdapter(
     private val mContext: Context,
-    private val resId: Int,
+    resId: Int,
     private val mList: ArrayList<StoreData>
 ) :
     ArrayAdapter<StoreData>(mContext, resId, mList) {
@@ -27,7 +27,7 @@ class StoreListViewAdapter(
             tempRow = mInflater.inflate(R.layout.item_store_list, null)
         }
 
-        var row = tempRow!!
+        val row = tempRow!!
         val data = mList[position]
 
         val storeNameTxt = row.findViewById<TextView>(R.id.storeNameTxt)
