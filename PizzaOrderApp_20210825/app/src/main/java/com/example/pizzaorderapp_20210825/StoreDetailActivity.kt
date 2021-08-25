@@ -7,7 +7,6 @@ import com.bumptech.glide.Glide
 import com.example.pizzaorderapp_20210825.base.BaseActivity
 import com.example.pizzaorderapp_20210825.datas.StoreData
 import kotlinx.android.synthetic.main.activity_store_detail.*
-import kotlinx.android.synthetic.main.item_store_list.*
 import kotlinx.android.synthetic.main.item_store_list.storeNameTxt
 
 class StoreDetailActivity : BaseActivity() {
