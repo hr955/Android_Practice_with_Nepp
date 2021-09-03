@@ -1,8 +1,9 @@
 package com.example.colosseum_20210903.utils
 
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import android.util.Log
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 class ServerUtil {
 
@@ -36,9 +37,26 @@ class ServerUtil {
             // 요청을 한다 -> 클라이언트의 역할 -> 앱이 클라이언트로 동작해야함.
             val client = OkHttpClient()
 
-            // 만들어진 요청 호출
-            client.newCall(request)
+            // 만들어진 요청 호출 -> 응답이 왔을때 분석 / UI 반영
+            // 호출을 하면 -> 응답 받아서 처리 (처리할 코드를 등록)
+            client.newCall(request).enqueue(object : Callback{
+                override fun onResponse(call: Call, response: Response) {
+                    // 어떤 내용이든 응답이 돌아온 경우 (로그인 성공, 실패 모두 응답)
+                    // 응답에 포함된 데이터들 중 -> 본문(Body)을 보자.
 
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    // 본문을 그냥 String 으로 찍으면 한글이 깨짐
+                    // JSONObject 형태로 변환
+                   Log.d("서버 응답 본문", jsonObj.toString())
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    // 실패 : 서버 연결 자체를 실패. 응답 X
+                    // 인터넷 끊김, 서버 접속 불가 등
+
+                }
+            })
         }
     }
 }
