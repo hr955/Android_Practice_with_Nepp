@@ -19,8 +19,6 @@ class MainActivity : BaseActivity() {
             val inputId = emailEdt.text.toString()
             val inputPw = passwordEdt.text.toString()
 
-            
-
         }
     }
 
