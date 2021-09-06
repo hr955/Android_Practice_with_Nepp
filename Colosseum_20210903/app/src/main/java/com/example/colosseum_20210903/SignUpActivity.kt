@@ -35,7 +35,11 @@ class SignUpActivity : BaseActivity() {
                         val code = jsonObj.getInt("code")
 
                         if (code == 200) {
-
+                            // 가입 성공 -> 이전 화면으로 복귀
+                            runOnUiThread {
+                                Toast.makeText(mContext, "가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
                         } else {
                             // 실패시만 동작 -> message에 담긴 가입 실패 사유
                             val message = jsonObj.getString("message")
