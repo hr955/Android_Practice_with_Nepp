@@ -41,9 +41,12 @@ class MainActivity : BaseActivity() {
                     } else {
                         // 로그인 실패 -> 토스트를 띄워보자
                         // 백그라운드에서 서버통신 중 -> UI에 토스트를 띄운다 -> 다른 쓰레드가 UI조작 (위험요소)
+                        // 서버가 알려주는 로그인 실패사유도 파싱. 토스트의 내용으로 띄워주자.
+                        val message = jsonObj.getString("message")
+
                         runOnUiThread {
                             // UI 조작은 UI 쓰레드에게 일을 따로 맡겨주자
-                            Toast.makeText(mContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
