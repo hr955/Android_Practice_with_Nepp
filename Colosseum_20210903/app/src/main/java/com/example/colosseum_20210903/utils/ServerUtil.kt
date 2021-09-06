@@ -75,12 +75,17 @@ class ServerUtil {
 
         // 회원 가입 실행 함수
         // handler -> 서버에 갔다와서 어떤행동을 할건지?
-        fun putRequestSingUp(email: String, password: String, nickname:String, handler: JsonResponseHandler?){
+        fun putRequestSingUp(
+            email: String,
+            password: String,
+            nickname: String,
+            handler: JsonResponseHandler?
+        ) {
             val urlString = "${HOST_URL}/user"
             val formData = FormBody.Builder()
                 .add("email", email)
                 .add("password", password)
-                .add("nick_name",nickname)
+                .add("nick_name", nickname)
                 .build()
 
             val request = Request.Builder()
@@ -90,7 +95,7 @@ class ServerUtil {
 
             val client = OkHttpClient()
 
-            client.newCall(request).enqueue(object: Callback{
+            client.newCall(request).enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
                     val bodyString = response.body!!.string()
                     val jsonObj = JSONObject(bodyString)
@@ -105,7 +110,7 @@ class ServerUtil {
         }
 
         // 이메일/닉네임 중복 확인 함수
-        fun getRequestDuplCheck(type: String, value: String, handler: JsonResponseHandler?){
+        fun getRequestDuplCheck(type: String, value: String, handler: JsonResponseHandler?) {
             // GET 메소드로 서버에 요청 -> URL을 적을떄, 쿼리 파라미터들도 같이 적어줘야함
             // 어디로 + 무엇을 들고 -> 한번에 작성
 
@@ -124,13 +129,14 @@ class ServerUtil {
                 .build()
 
             val client = OkHttpClient()
-            client.newCall(request).enqueue(object: Callback{
+            client.newCall(request).enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
                     val bodyString = response.body!!.string()
                     val jsonObj = JSONObject(bodyString)
                     Log.d("서버응답", jsonObj.toString())
                     handler?.onResponse(jsonObj)
                 }
+
                 override fun onFailure(call: Call, e: IOException) {
                 }
             })
