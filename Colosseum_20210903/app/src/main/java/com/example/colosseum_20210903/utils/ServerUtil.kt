@@ -59,6 +59,7 @@ class ServerUtil {
                     Log.d("서버 응답 본문", jsonObj.toString())
 
                     //받아낸 jsonObj를 통째로 -> 화면의 응답처리 코드에 넣어주자
+                    handler?.onResponse(jsonObj)
 
                 }
 
