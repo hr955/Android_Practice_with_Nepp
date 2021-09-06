@@ -1,6 +1,5 @@
 package com.example.colosseum_20210903
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
