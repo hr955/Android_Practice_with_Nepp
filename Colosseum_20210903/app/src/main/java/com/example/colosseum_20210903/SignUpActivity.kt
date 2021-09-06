@@ -17,6 +17,7 @@ class SignUpActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        // 이메일 중복확인 버튼 클릭 이벤트
         checkEmailBtn.setOnClickListener {
             // 1. 입력한 이메일을 받아서
             val inputEmail = emailEdt.text.toString()
@@ -41,6 +42,7 @@ class SignUpActivity : BaseActivity() {
                 })
         }
 
+        // 회원가입 완료 버튼 클릭 이벤트
         signUpBtn.setOnClickListener {
             // 1. 입력한 값을 받아서
             val inputEmail = emailEdt.text.toString()

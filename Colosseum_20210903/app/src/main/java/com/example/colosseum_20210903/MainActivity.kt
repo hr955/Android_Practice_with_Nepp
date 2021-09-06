@@ -19,10 +19,12 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        // 회원가입 버튼 클릭 이벤트
         signUpBtn.setOnClickListener {
             startActivity(Intent(mContext, SignUpActivity::class.java))
         }
 
+        // 로그인 버튼 클릭 이벤트
         signInBtn.setOnClickListener {
             //입력한 아이디와 비번을 변수로 저장 -> 서버에서 일치여부 판단
             val inputId = emailEdt.text.toString()
