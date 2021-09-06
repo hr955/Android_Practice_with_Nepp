@@ -1,6 +1,8 @@
 package com.example.colosseum_20210903
 
 import android.os.Bundle
+import com.example.colosseum_20210903.utils.ServerUtil
+import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,5 +17,15 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        getMainDataFromServer()
+    }
+
+    // 서버에서, 메인화면에 보여줄 정보 받아오기
+    fun getMainDataFromServer() {
+        ServerUtil.getRequestMainData(mContext, object : ServerUtil.JsonResponseHandler {
+            override fun onResponse(jsonObj: JSONObject) {
+
+            }
+        })
     }
 }
