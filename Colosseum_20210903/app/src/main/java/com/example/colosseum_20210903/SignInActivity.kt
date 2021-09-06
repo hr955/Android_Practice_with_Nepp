@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.colosseum_20210903.utils.ContextUtil
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import org.json.JSONObject
@@ -18,6 +19,12 @@ class SignInActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        // 자동 로그인 체크박스의 값이 바뀔때마다 저장
+        autoLoginCheckBox.setOnCheckedChangeListener { compoundButton, isChecked ->
+            // isChecked에 들어오는 값을 저장
+            ContextUtil.setAutoLogin(mContext, isChecked)
+        }
+
         // 회원가입 버튼 클릭 이벤트
         signUpBtn.setOnClickListener {
             startActivity(Intent(mContext, SignUpActivity::class.java))
@@ -73,5 +80,7 @@ class SignInActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        // 자동로그인 여부를 받아내서 -> 자동 로그인 체크박스에 반영
+        autoLoginCheckBox.isChecked = ContextUtil.getAutoLogin(mContext)
     }
 }
