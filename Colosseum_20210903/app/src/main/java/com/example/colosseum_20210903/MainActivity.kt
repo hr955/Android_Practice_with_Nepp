@@ -1,13 +1,16 @@
 package com.example.colosseum_20210903
 
 import android.os.Bundle
+import com.example.colosseum_20210903.adatpers.TopicAdapter
 import com.example.colosseum_20210903.datas.TopicData
 import com.example.colosseum_20210903.utils.ServerUtil
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
 
     val mTopicList = ArrayList<TopicData>()
+    lateinit var mTopicAdapter: TopicAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +24,12 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
         getMainDataFromServer()
+
+        mTopicAdapter = TopicAdapter(mContext, R.layout.topic_list_item, mTopicList)
+        topicListView.adapter = mTopicAdapter
+
     }
 
     // 서버에서, 메인화면에 보여줄 정보 받아오기
@@ -42,6 +50,11 @@ class MainActivity : BaseActivity() {
 
                     // mTopicList에 하나씩 추가
                     mTopicList.add(tempTopicData)
+                }
+
+                // 목록의 변화 -> 리스트뷰가 인지 -> 새로고침 공지 -> 리스트뷰 변경 -> 백그라운드에서 UI 변경
+                runOnUiThread {
+                    mTopicAdapter.notifyDataSetChanged()
                 }
             }
         })
