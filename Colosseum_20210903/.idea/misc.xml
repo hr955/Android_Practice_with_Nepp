@@ -4,10 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/hey/AndroidStudioProjects/Android_Practice_with_Nepp/Colosseum_20210903/app/src/main/res/layout/activity_main.xml" value="0.24427083333333333" />
+        <entry key="..\:/Users/hey/AndroidStudioProjects/Android_Practice_with_Nepp/Colosseum_20210903/app/src/main/res/layout/activity_sign_up.xml" value="0.11458333333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

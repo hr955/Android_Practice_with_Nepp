@@ -1,5 +1,6 @@
 package com.example.colosseum_20210903
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,10 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        signUpBtn.setOnClickListener {
+            startActivity(Intent(mContext, SignUpActivity::class.java))
+        }
+
         signInBtn.setOnClickListener {
             //입력한 아이디와 비번을 변수로 저장 -> 서버에서 일치여부 판단
             val inputId = emailEdt.text.toString()
