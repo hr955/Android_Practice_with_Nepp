@@ -4,6 +4,7 @@ import android.util.Log
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
+import javax.net.ssl.HostnameVerifier
 
 class ServerUtil {
 
@@ -66,6 +67,37 @@ class ServerUtil {
                 override fun onFailure(call: Call, e: IOException) {
                     // 실패 : 서버 연결 자체를 실패. 응답 X
                     // 인터넷 끊김, 서버 접속 불가 등
+
+                }
+            })
+        }
+
+        // 회원 가입 실행 함수
+        // handler -> 서버에 갔다와서 어떤행동을 할건지?
+        fun putRequestSingUp(email: String, password: String, nickname:String, handler: JsonResponseHandler?){
+            val urlString = "${HOST_URL}/user"
+            val formData = FormBody.Builder()
+                .add("email", email)
+                .add("password", password)
+                .add("nick_name",nickname)
+                .build()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .put(formData)
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object: Callback{
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답본문", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
 
                 }
             })
