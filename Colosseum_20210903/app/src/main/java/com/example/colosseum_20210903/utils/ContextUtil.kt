@@ -31,7 +31,7 @@ class ContextUtil {
         }
 
         // 저장된 토큰 읽어오는 함수
-        fun getToKen(context: Context): String {
+        fun getToken(context: Context): String {
             val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
             return pref.getString(TOKEN, "")!!
         }

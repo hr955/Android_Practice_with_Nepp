@@ -6,7 +6,6 @@ import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.json.JSONObject
 import java.io.IOException
-import javax.net.ssl.HostnameVerifier
 
 class ServerUtil {
 
@@ -156,7 +155,7 @@ class ServerUtil {
             val request = Request.Builder()
                 .url(urlString)
                 .get()
-                .header("X-Http-Token", ContextUtil.getToKen(context))
+                .header("X-Http-Token", ContextUtil.getToken(context))
                 .build()
 
             val client = OkHttpClient()
