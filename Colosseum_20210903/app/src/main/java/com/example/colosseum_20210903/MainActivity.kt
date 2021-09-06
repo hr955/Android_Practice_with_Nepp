@@ -23,9 +23,9 @@ class MainActivity : BaseActivity() {
 
     override fun setupEvents() {
         topicListView.setOnItemClickListener { adapterView, view, position, l ->
-            val intent = Intent(mContext, ViewTopicDetailActivity::class.java)
-            intent.putExtra("TopicData", mTopicList[position])
-            startActivity(intent)
+            val myIntent = Intent(mContext, ViewTopicDetailActivity::class.java)
+            myIntent.putExtra("TopicData", mTopicList[position])
+            startActivity(myIntent)
         }
     }
 
