@@ -38,6 +38,16 @@ class MainActivity : BaseActivity() {
                     // 어떤 이유든 에러가 있다 -> code : 200이 아닌 값
                     if (code == 200) {
                         // 정상 작동한 경우 -> 로그인 성공
+                        // 로그인 성공시 토스트 띄우기
+                        // "data" 이름의 { } 를 변수로 담자
+                        val dataObj = jsonObj.getJSONObject("data")
+                        // data: {} 안에서 user:{}를 변수에 담자
+                        val userObj = dataObj.getJSONObject("user")
+                        val nickname = userObj.getString("nick_name")
+                        runOnUiThread {
+                            Toast.makeText(mContext, "${nickname}님 환영합니다", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     } else {
                         // 로그인 실패 -> 토스트를 띄워보자
                         // 백그라운드에서 서버통신 중 -> UI에 토스트를 띄운다 -> 다른 쓰레드가 UI조작 (위험요소)
