@@ -1,5 +1,6 @@
 package com.example.colosseum_20210903
 
+import android.content.Intent
 import android.os.Bundle
 import com.example.colosseum_20210903.adatpers.TopicAdapter
 import com.example.colosseum_20210903.datas.TopicData
@@ -21,6 +22,11 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        topicListView.setOnItemClickListener { adapterView, view, position, l ->
+            val intent = Intent(mContext, ViewTopicDetailActivity::class.java)
+            intent.putExtra("TopicData", mTopicList[position])
+            startActivity(intent)
+        }
     }
 
     override fun setValues() {
