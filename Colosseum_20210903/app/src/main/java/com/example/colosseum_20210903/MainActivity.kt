@@ -54,6 +54,7 @@ class MainActivity : BaseActivity() {
                     tempTopicData.title = topicObj.getString("title")
                     tempTopicData.imageUrl = topicObj.getString("img_url")
 
+
                     // mTopicList에 하나씩 추가
                     mTopicList.add(tempTopicData)
                 }

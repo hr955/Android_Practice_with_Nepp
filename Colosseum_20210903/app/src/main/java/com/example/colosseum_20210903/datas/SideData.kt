@@ -6,5 +6,5 @@ class SideData(
     var title: String,
     var voteCount: Int
 ) {
-    constructor() : this(0, 0, "", 0)
+    constructor() : this(0, 0, "미정", 0)
 }

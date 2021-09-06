@@ -25,5 +25,13 @@ class ViewTopicDetailActivity : BaseActivity() {
         Glide.with(mContext).load(mTopicData.imageUrl).into(topicImg)
 
         titleTxt.text = mTopicData.title
+
+        // 나머지 데이터는 서버에서 가져오자
+        getTopicDetailDataFromServer()
+    }
+
+    // 최신 토론 상세 데이터를 다시 서버에서 불러오기 -> 투표현황 등..
+    fun getTopicDetailDataFromServer() {
+
     }
 }
