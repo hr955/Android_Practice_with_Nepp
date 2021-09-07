@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.colosseum_20210903.R
+import com.example.colosseum_20210903.ViewTopicDetailActivity
 import com.example.colosseum_20210903.datas.ReplyData
-import java.text.SimpleDateFormat
+import com.example.colosseum_20210903.utils.ServerUtil
+import org.json.JSONObject
 
 class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>) :
     ArrayAdapter<ReplyData>(mContext, resId, mList) {
@@ -41,8 +43,31 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
         selectedSideTxt.text = "(${data.selectedSide.title})"
         writerNicknameTxt.text = data.writer.nickname
 
-        val sdf = SimpleDateFormat("yyyy년 M월 d일")
         createdAtTxt.text = data.getFormattedTimeAgo()
+
+        // 해당 댓글에 좋아오/싫어요 -> 서버에 전송
+
+        likeCountTxt.tag = true
+        hateCountTxt.tag = false
+
+        val ocl = object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                val isLike = view!!.tag.toString().toBoolean()
+
+                ServerUtil.postRequestReplyLikeOrHate(
+                    mContext,
+                    data.id,
+                    isLike,
+                    object : ServerUtil.JsonResponseHandler {
+                        override fun onResponse(jsonObj: JSONObject) {
+                            (mContext as ViewTopicDetailActivity).getTopicDetailDataFromServer()
+                        }
+                    })
+            }
+        }
+
+        likeCountTxt.setOnClickListener(ocl)
+        hateCountTxt.setOnClickListener(ocl)
 
         return row
     }
