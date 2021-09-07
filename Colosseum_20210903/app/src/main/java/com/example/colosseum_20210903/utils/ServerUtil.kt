@@ -181,6 +181,8 @@ class ServerUtil {
             // 주소?type=EMAIL 등 파라미터 이름 = 값 형태로 이어붙이는 주소 -> Query 라고 부름
             url.addPathSegment(topicId.toString())
 
+            url.addEncodedQueryParameter("order_type", "NEW")
+
             val urlString = url.toString()
 
             Log.d("완성된URL", urlString)
