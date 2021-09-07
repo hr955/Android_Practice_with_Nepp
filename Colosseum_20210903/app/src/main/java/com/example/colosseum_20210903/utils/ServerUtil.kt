@@ -183,7 +183,7 @@ class ServerUtil {
 
             val urlString = url.toString()
 
-            Log.d("완성된 URL", urlString)
+            Log.d("완성된URL", urlString)
 
             val request = Request.Builder()
                 .url(urlString)

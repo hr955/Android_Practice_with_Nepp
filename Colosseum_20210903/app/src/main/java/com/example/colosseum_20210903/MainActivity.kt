@@ -53,11 +53,12 @@ class MainActivity : BaseActivity() {
                 // 서버가 내려주는 토론주제들 (JsonObject 목록) -> TopicData로 변환해서 ArrayList에 추가
                 for (i in 0 until topicsArr.length()) {
                     val topicObj = topicsArr.getJSONObject(i)
-                    val tempTopicData = TopicData()
-                    tempTopicData.id = topicObj.getInt("id")
-                    tempTopicData.title = topicObj.getString("title")
-                    tempTopicData.imageUrl = topicObj.getString("img_url")
+//                    val tempTopicData = TopicData()
+//                    tempTopicData.id = topicObj.getInt("id")
+//                    tempTopicData.title = topicObj.getString("title")
+//                    tempTopicData.imageUrl = topicObj.getString("img_url")
 
+                    val tempTopicData = TopicData.getTopicDataFromJson(topicObj)
 
                     // mTopicList에 하나씩 추가
                     mTopicList.add(tempTopicData)
