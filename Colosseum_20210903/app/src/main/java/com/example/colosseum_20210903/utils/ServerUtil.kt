@@ -146,7 +146,6 @@ class ServerUtil {
         // 메인화면 데이터 가져오기
         // 저장된 토큰값을 서버에 전송 -> pref를 열기 위한 재료로 context 필요
         fun getRequestMainData(context: Context, handler: JsonResponseHandler?) {
-
             val url = "${HOST_URL}/v2/main_info".toHttpUrlOrNull()!!.newBuilder()
             val urlString = url.toString()
 
@@ -207,5 +206,36 @@ class ServerUtil {
                 }
             })
         }
+
+        // 진영 선택 투표 함수
+        fun postRequestTopicVote(context: Context, sideId: Int, handler: JsonResponseHandler?) {
+            val urlString = "${HOST_URL}/topic_vote"
+
+            val formData = FormBody.Builder()
+                .add("side_id", sideId.toString())
+                .build()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .post(formData)
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버 응답 본문", jsonObj.toString())
+
+                    handler?.onResponse(jsonObj)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                }
+            })
+        }
+
     }
 }
