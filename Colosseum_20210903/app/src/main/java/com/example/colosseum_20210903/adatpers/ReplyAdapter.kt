@@ -42,7 +42,7 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
         writerNicknameTxt.text = data.writer.nickname
 
         val sdf = SimpleDateFormat("yyyy년 M월 d일")
-        createdAtTxt.text = sdf.format(data.createdAt.time)
+        createdAtTxt.text = data.getFormattedTimeAgo()
 
         return row
     }
