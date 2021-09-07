@@ -14,6 +14,10 @@ class TopicData(
     // 내가 투표한 진영의 id가 뭔지
     var mySideId = 0 // Int가 들어올 예정
 
+    // 내가 투표한 진영 자체를 저장
+    // 아직 투표를 하지 않았다면 -> null
+    var mySelectedSide: SideData? = null
+
     companion object {
         // json {  } 를 넣으면 -> 파싱해서 -> TopicData 객체로 리턴해주는 함수
         fun getTopicDataFromJson(json: JSONObject): TopicData {
@@ -27,6 +31,11 @@ class TopicData(
 
             // 내가 선택한 진영의 id
             topicData.mySideId = json.getInt("my_side_id")
+            // 그 진영이 어떤건지? -> null로 내려오면 파싱 X
+            if(!json.isNull("my_side")){
+                // null이 아닐때만 파싱
+                topicData.mySelectedSide = SideData.getSideDataFromJson(json.getJSONObject("my_side"))
+            }
 
             // 토론 하위 정보로 -> sides 라는 JSONArray를 내려줌
             // JSONArray : for문 돌려서 파싱 -> topicData의 sideList에 추가해주기

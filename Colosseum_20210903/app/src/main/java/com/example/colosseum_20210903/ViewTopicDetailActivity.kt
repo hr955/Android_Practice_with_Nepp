@@ -1,5 +1,6 @@
 package com.example.colosseum_20210903
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
@@ -55,6 +56,12 @@ class ViewTopicDetailActivity : BaseActivity() {
 
         voteToFirstSideBtn.setOnClickListener(ocl)
         voteToSecondSideBtn.setOnClickListener(ocl)
+
+        addReplyBtn.setOnClickListener {
+            val myIntent = Intent(mContext, EditReplyActivity::class.java)
+            myIntent.putExtra("selecteSide", mTopicData.mySelectedSide)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {
