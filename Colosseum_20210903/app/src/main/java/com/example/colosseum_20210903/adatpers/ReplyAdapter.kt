@@ -17,7 +17,7 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var row = convertView
 
-        if(row == null){
+        if (row == null) {
             row = mInflater.inflate(R.layout.reply_list_item, null)
         }
 
@@ -40,6 +40,7 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
 
         selectedSideTxt.text = "(${data.selectedSide.title})"
 
+        writerNicknameTxt.text = data.writer.nickname
         return row
     }
 
