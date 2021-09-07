@@ -11,9 +11,9 @@ class TopicData(
     // 진영 목록을 담아줄 ArrayList
     val sideList = ArrayList<SideData>()
 
-    companion object{
+    companion object {
         // json {  } 를 넣으면 -> 파싱해서 -> TopicData 객체로 리턴해주는 함수
-        fun getTopicDataFromJson(json : JSONObject) : TopicData {
+        fun getTopicDataFromJson(json: JSONObject): TopicData {
             // 결과로 사용될 TopicData 객체 생성
             val topicData = TopicData()
 
@@ -22,7 +22,21 @@ class TopicData(
             topicData.title = json.getString("title")
             topicData.imageUrl = json.getString("img_url")
 
-            //최종 결과 산정
+            // 토론 하위 정보로 -> sides 라는 JSONArray를 내려줌
+            // JSONArray : for문 돌려서 파싱 -> topicData의 sideList에 추가해주기
+            val sidesArr = json.getJSONArray("sides")
+
+            for (i in 0 until sidesArr.length()) {
+                val sideObj = sidesArr.getJSONObject(i)
+
+                // JSONObject -> SideData() 로 변환
+                val sideData = SideData.getSideDataFromJson(sideObj)
+
+                // topicData의 sideList에 추가
+                topicData.sideList.add(sideData)
+            }
+
+            // 최종 결과 산정
             return topicData
         }
     }
