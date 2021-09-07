@@ -31,6 +31,10 @@ class MainActivity : BaseActivity() {
             myIntent.putExtra("TopicData", mTopicList[position])
             startActivity(myIntent)
         }
+
+        notiBtn.setOnClickListener {
+            Toast.makeText(mContext, "알림 보러가기", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun setValues() {
@@ -42,7 +46,7 @@ class MainActivity : BaseActivity() {
 
         // backBtn 숨김처리
         backBtn.visibility = View.GONE
-
+        notiBtn.visibility = View.VISIBLE
     }
 
     // 서버에서, 메인화면에 보여줄 정보 받아오기
@@ -74,7 +78,8 @@ class MainActivity : BaseActivity() {
                 // 목록의 변화 -> 리스트뷰가 인지 -> 새로고침 공지 -> 리스트뷰 변경 -> 백그라운드에서 UI 변경
                 runOnUiThread {
                     mTopicAdapter.notifyDataSetChanged()
-                    Toast.makeText(mContext, "${loginUser.nickname}님 환영합니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "${loginUser.nickname}님 환영합니다!", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
