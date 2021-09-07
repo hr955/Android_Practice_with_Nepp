@@ -12,6 +12,11 @@ class ReplyData(
     var replyCount: Int
 ) {
 
+    // ReplyData의 하위 개념들
+
+    // 이 댓글이 지지하는 진영
+    lateinit var selectedSide: SideData
+
     constructor() : this(0, "", 0, 0, false, false, 0)
 
     companion object {
@@ -26,6 +31,10 @@ class ReplyData(
             replyData.myLike = json.getBoolean("my_like")
             replyData.myHate = json.getBoolean("my_dislike")
             replyData.replyCount = json.getInt("reply_count")
+
+            // 선택진영 파싱 -> SideData 에 만들어둔 파싱 기능 활용
+            val selectedSideObj = json.getJSONObject("selected_side")
+            replyData.selectedSide = SideData.getSideDataFromJson(selectedSideObj)
 
             return replyData
         }
