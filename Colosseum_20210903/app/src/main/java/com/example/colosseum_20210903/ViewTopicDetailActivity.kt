@@ -36,14 +36,17 @@ class ViewTopicDetailActivity : BaseActivity() {
                 val clickedSideId = view!!.tag.toString().toInt()
 
                 // 해당 진영에 투표하기 (서버에 투표 실행)
-                ServerUtil.postRequestTopicVote(mContext, clickedSideId, object : ServerUtil.JsonResponseHandler{
-                    override fun onResponse(jsonObj: JSONObject) {
-                        // 투표 결과 확인 -> 새로 투표 현황을 다시 받아오자
-                        // 이전에 함수로 분리해둔, 서버에서 상세정보 받아오기 호출
-                        getTopicDetailDataFromServer()
+                ServerUtil.postRequestTopicVote(
+                    mContext,
+                    clickedSideId,
+                    object : ServerUtil.JsonResponseHandler {
+                        override fun onResponse(jsonObj: JSONObject) {
+                            // 투표 결과 확인 -> 새로 투표 현황을 다시 받아오자
+                            // 이전에 함수로 분리해둔, 서버에서 상세정보 받아오기 호출
+                            getTopicDetailDataFromServer()
 
-                    }
-                })
+                        }
+                    })
 
                 // 투표를 하고 돌아오면 -> 새로 투표현황 불러오기
 
@@ -111,6 +114,20 @@ class ViewTopicDetailActivity : BaseActivity() {
 
             secondSideTitleTxt.text = mTopicData.sideList[1].title
             secondSideVoteCountTxt.text = "${mTopicData.sideList[1].voteCount}표"
+
+            // 투표 여부에 따라 버튼에 다른 문구 적용
+            if (mTopicData.mySideId == -1) {
+                voteToFirstSideBtn.text = "투표하기"
+                voteToSecondSideBtn.text = "투표하기"
+            } else {
+                if (mTopicData.mySideId == mTopicData.sideList[0].id) {
+                    voteToFirstSideBtn.text = "취소하기"
+                    voteToSecondSideBtn.text = "선택변경"
+                } else {
+                    voteToFirstSideBtn.text = "선택변경"
+                    voteToSecondSideBtn.text = "취소하기"
+                }
+            }
 
             // 리스트뷰도 새로고침
             mReplyAdapter.notifyDataSetChanged()
