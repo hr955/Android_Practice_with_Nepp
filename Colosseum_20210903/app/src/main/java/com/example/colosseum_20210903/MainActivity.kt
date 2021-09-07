@@ -2,12 +2,14 @@ package com.example.colosseum_20210903
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.colosseum_20210903.adatpers.TopicAdapter
 import com.example.colosseum_20210903.datas.TopicData
 import com.example.colosseum_20210903.datas.UserData
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.my_custom_action_bar.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
@@ -37,6 +39,9 @@ class MainActivity : BaseActivity() {
 
         mTopicAdapter = TopicAdapter(mContext, R.layout.topic_list_item, mTopicList)
         topicListView.adapter = mTopicAdapter
+
+        // backBtn 숨김처리
+        backBtn.visibility = View.GONE
 
     }
 
