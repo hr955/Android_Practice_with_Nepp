@@ -33,11 +33,14 @@ class ViewTopicDetailActivity : BaseActivity() {
             override fun onClick(view: View?) {
                 // 버튼이 눌리면 할 일
                 // view -> 눌린게 어떤 버튼인지? 눌린 버튼을 담아준다
+                val clickedSideId = view!!.tag.toString().toInt()
 
                 // 해당 진영에 투표하기 (서버에 투표 실행)
-                ServerUtil.postRequestTopicVote(mContext, 1, object : ServerUtil.JsonResponseHandler{
+                ServerUtil.postRequestTopicVote(mContext, clickedSideId, object : ServerUtil.JsonResponseHandler{
                     override fun onResponse(jsonObj: JSONObject) {
-                        // 투표 결과 확인
+                        // 투표 결과 확인 -> 새로 투표 현황을 다시 받아오자
+                        // 이전에 함수로 분리해둔, 서버에서 상세정보 받아오기 호출
+                        getTopicDetailDataFromServer()
 
                     }
                 })
@@ -53,6 +56,11 @@ class ViewTopicDetailActivity : BaseActivity() {
 
     override fun setValues() {
         mTopicData = intent.getSerializableExtra("TopicData") as TopicData
+
+        // 투표 버튼에, 각 진영이 어떤 진영인지 "버튼에 메모" -> 투표할 때 그 진영이 뭔지 알아낼 수 있다
+        voteToFirstSideBtn.tag = mTopicData.sideList[0].id
+        voteToSecondSideBtn.tag = mTopicData.sideList[1].id
+
         Glide.with(mContext).load(mTopicData.imageUrl).into(topicImg)
 
         titleTxt.text = mTopicData.title
