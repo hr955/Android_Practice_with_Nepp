@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.colosseum_20210903.R
 import com.example.colosseum_20210903.datas.ReplyData
+import java.text.SimpleDateFormat
 
 class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>) :
     ArrayAdapter<ReplyData>(mContext, resId, mList) {
@@ -37,10 +38,11 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
         replyCountTxt.text = "답글 ${data.replyCount}개"
         likeCountTxt.text = "좋아요 ${data.likeCount}개"
         hateCountTxt.text = "싫어요 ${data.hateCount}개"
-
         selectedSideTxt.text = "(${data.selectedSide.title})"
-
         writerNicknameTxt.text = data.writer.nickname
+
+        val sdf = SimpleDateFormat("yyyy년 M월 d일")
+        createdAtTxt.text = sdf.format(data.createdAt.time)
 
         return row
     }
