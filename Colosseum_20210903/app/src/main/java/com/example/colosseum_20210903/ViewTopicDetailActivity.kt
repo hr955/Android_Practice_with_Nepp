@@ -66,7 +66,7 @@ class ViewTopicDetailActivity : BaseActivity() {
                 return@setOnClickListener // 결과 지정 : 함수를 강제 종료
             }else{
                 val myIntent = Intent(mContext, EditReplyActivity::class.java)
-                myIntent.putExtra("selecteSide", mTopicData.mySelectedSide)
+                myIntent.putExtra("selectedSide", mTopicData.mySelectedSide)
                 startActivity(myIntent)
             }
         }
