@@ -3,6 +3,7 @@ package com.example.colosseum_20210903
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.colosseum_20210903.adatpers.ReplyAdapter
 import com.example.colosseum_20210903.datas.ReplyData
@@ -58,9 +59,16 @@ class ViewTopicDetailActivity : BaseActivity() {
         voteToSecondSideBtn.setOnClickListener(ocl)
 
         addReplyBtn.setOnClickListener {
-            val myIntent = Intent(mContext, EditReplyActivity::class.java)
-            myIntent.putExtra("selecteSide", mTopicData.mySelectedSide)
-            startActivity(myIntent)
+            // 투표를 해야만 댓글 작성 화면으로 이동가능
+            // 선택한 진영이 없다면, myIntent 관련 코드 실행 X -> Validation (입력값 검증) 작업
+            if(mTopicData.mySelectedSide == null){
+                Toast.makeText(mContext, "투표를 진행해야 의견 등록이 가능합니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener // 결과 지정 : 함수를 강제 종료
+            }else{
+                val myIntent = Intent(mContext, EditReplyActivity::class.java)
+                myIntent.putExtra("selecteSide", mTopicData.mySelectedSide)
+                startActivity(myIntent)
+            }
         }
     }
 
