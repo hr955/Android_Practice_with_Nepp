@@ -27,6 +27,12 @@ class ViewTopicDetailActivity : BaseActivity() {
         setValues()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        getTopicDetailDataFromServer()
+    }
+
     override fun setupEvents() {
         // 첫번째 진영, 두번째 진영 투표버튼의 이벤트
         // 두개의 버튼이 하는일이 거의 동일함 -> 코드를 한번만 짜서, 두개의 버튼에 똑같이 달아주자
@@ -46,7 +52,6 @@ class ViewTopicDetailActivity : BaseActivity() {
                             // 투표 결과 확인 -> 새로 투표 현황을 다시 받아오자
                             // 이전에 함수로 분리해둔, 서버에서 상세정보 받아오기 호출
                             getTopicDetailDataFromServer()
-
                         }
                     })
 
@@ -102,6 +107,9 @@ class ViewTopicDetailActivity : BaseActivity() {
 
                     // mTopicData를 새로 파싱한 데이터로 교체
                     mTopicData = TopicData.getTopicDataFromJson(topicObj)
+
+                    // 댓글을 새로 불러옴 -> 기존댓글 삭제 (중복 막기)
+                    mReplyList.clear()
 
                     // topicObj 안에 댓글 목록도 같이 들어있다 -> 추가 파싱, UI 반영
                     val repliesArr = topicObj.getJSONArray("replies")
