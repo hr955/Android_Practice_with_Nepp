@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.colosseum_20210903.adatpers.ChildReplyAdapter
 import com.example.colosseum_20210903.datas.ReplyData
+import com.example.colosseum_20210903.datas.TopicData
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
 import org.json.JSONObject
@@ -60,7 +61,19 @@ class ViewReplyDetailActivity : BaseActivity() {
                 super.onResponse(jsonObj)
 
                 // 서버에서 댓글목록 불러와 List 채워주기
+                val dataObj = jsonObj.getJSONObject("data")
+                val replyObj = dataObj.getJSONObject("reply")
+                val childReplyArr = replyObj.getJSONArray("replies")
 
+                for (i in 0 until childReplyArr.length()) {
+                    val childReplyObj = childReplyArr.getJSONObject(i)
+
+                    mChildReplyData.add(ReplyData.getReplyDataFromJson(childReplyObj))
+                }
+
+                runOnUiThread {
+                    mChildReplyAdapter.notifyDataSetChanged()
+                }
             }
         })
 
