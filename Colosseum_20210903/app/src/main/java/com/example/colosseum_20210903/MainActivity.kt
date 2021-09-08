@@ -49,7 +49,34 @@ class MainActivity : BaseActivity() {
 
         // backBtn 숨김처리
         backBtn.visibility = View.GONE
+        // 알림 버튼 보여주기
         notiLayout.visibility = View.VISIBLE
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 서버에서 안읽은 알림 개수 받아오기 -> 화면 들어올때마다 확인
+        // 알림개수 0개 -> 빨간 동그라미 숨김처리
+        // 1개 이상 -> 빨간 동그라미 보여주기 + 몇개인지 텍스트 설정
+        ServerUtil.getRequestNotificationCountOrList(
+            mContext,
+            false,
+            object : ServerUtil.JsonResponseHandler {
+                override fun onResponse(jsonObj: JSONObject) {
+                    val dataObj = jsonObj.getJSONObject("data")
+                    val unreadCount = dataObj.getInt("unread_noty_count")
+                    runOnUiThread {
+                        if (unreadCount == 0) {
+                            notiCountTxt.visibility = View.GONE
+                        } else {
+                            notiCountTxt.text = unreadCount.toString()
+                            notiCountTxt.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            })
     }
 
     // 서버에서, 메인화면에 보여줄 정보 받아오기

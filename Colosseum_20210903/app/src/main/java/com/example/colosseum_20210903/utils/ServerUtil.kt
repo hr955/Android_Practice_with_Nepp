@@ -238,7 +238,12 @@ class ServerUtil {
         }
 
         // 토론 주제에 의견 등록하기
-        fun postRequestTopicReply(context: Context, topicId: Int, content: String, handler: JsonResponseHandler?) {
+        fun postRequestTopicReply(
+            context: Context,
+            topicId: Int,
+            content: String,
+            handler: JsonResponseHandler?
+        ) {
             val urlString = "${HOST_URL}/topic_reply"
 
             val formData = FormBody.Builder()
@@ -268,7 +273,13 @@ class ServerUtil {
             })
         }
 
-        fun postRequestReplyLikeOrHate(context: Context, replyId: Int, isLike: Boolean, handler: JsonResponseHandler?) {
+        // 댓글 좋아요/싫어요 상태 반영
+        fun postRequestReplyLikeOrHate(
+            context: Context,
+            replyId: Int,
+            isLike: Boolean,
+            handler: JsonResponseHandler?
+        ) {
             val urlString = "${HOST_URL}/topic_reply_like"
 
             val formData = FormBody.Builder()
@@ -290,6 +301,40 @@ class ServerUtil {
                     val jsonObj = JSONObject(bodyString)
                     Log.d("서버 응답 본문", jsonObj.toString())
 
+                    handler?.onResponse(jsonObj)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                }
+            })
+        }
+
+        // 알림 개수 or 목록까지 가져오기
+        fun getRequestNotificationCountOrList(
+            context: Context,
+            needList: Boolean,
+            handler: JsonResponseHandler?
+        ) {
+            val url = "${HOST_URL}/notification".toHttpUrlOrNull()!!.newBuilder()
+            url.addEncodedQueryParameter("need_all_notis",needList.toString())
+
+            val urlString = url.toString()
+
+            Log.d("완성된 URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답", jsonObj.toString())
                     handler?.onResponse(jsonObj)
                 }
 
