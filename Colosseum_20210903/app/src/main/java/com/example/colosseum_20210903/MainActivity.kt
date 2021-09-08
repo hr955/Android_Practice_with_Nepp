@@ -54,7 +54,7 @@ class MainActivity : BaseActivity() {
         // 서버에서 안읽은 알림 개수 받아오기 -> 화면 들어올때마다 확인
         // 알림개수 0개 -> 빨간 동그라미 숨김처리
         // 1개 이상 -> 빨간 동그라미 보여주기 + 몇개인지 텍스트 설정
-        ServerUtil.getRequestNotificationList(
+        ServerUtil.getRequestNotificationCountOrList(
             mContext,
             false,
             object : ServerUtil.JsonResponseHandler {

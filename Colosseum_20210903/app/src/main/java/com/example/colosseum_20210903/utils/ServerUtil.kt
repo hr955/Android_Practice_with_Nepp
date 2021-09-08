@@ -310,7 +310,7 @@ class ServerUtil {
         }
 
         // 알림 개수 or 목록까지 가져오기
-        fun getRequestNotificationList(
+        fun getRequestNotificationCountOrList(
             context: Context,
             needList: Boolean,
             handler: JsonResponseHandler?
@@ -335,6 +335,40 @@ class ServerUtil {
                     val bodyString = response.body!!.string()
                     val jsonObj = JSONObject(bodyString)
                     Log.d("서버응답", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                }
+            })
+        }
+
+        // 알림 읽음 처리
+        fun postRequestNotificationRead(
+            context: Context,
+            notiId: Int,
+            handler: JsonResponseHandler?
+        ) {
+            val urlString = "${HOST_URL}/notification"
+
+            val formData = FormBody.Builder()
+                .add("noti_id", notiId.toString())
+                .build()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .post(formData)
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버 응답 본문", jsonObj.toString())
+
                     handler?.onResponse(jsonObj)
                 }
 
