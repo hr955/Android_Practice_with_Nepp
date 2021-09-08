@@ -1,6 +1,7 @@
 package com.example.colosseum_20210903.adatpers
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.load.engine.Resource
 import com.example.colosseum_20210903.R
+import com.example.colosseum_20210903.ViewReplyDetailActivity
 import com.example.colosseum_20210903.ViewTopicDetailActivity
 import com.example.colosseum_20210903.datas.ReplyData
 import com.example.colosseum_20210903.utils.ServerUtil
@@ -91,8 +93,9 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
         hateCountTxt.setOnClickListener(ocl)
 
         replyCountTxt.setOnClickListener {
-            // 답글 목록 보는 화면으로 이동
-
+            val myIntent = Intent(mContext, ViewReplyDetailActivity::class.java)
+            myIntent.putExtra("replyData", data)
+            mContext.startActivity(myIntent)
         }
 
         return row

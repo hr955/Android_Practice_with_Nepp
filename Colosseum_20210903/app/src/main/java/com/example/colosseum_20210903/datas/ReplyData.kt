@@ -1,6 +1,7 @@
 package com.example.colosseum_20210903.datas
 
 import org.json.JSONObject
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,7 +13,7 @@ class ReplyData(
     var myLike: Boolean,
     var myHate: Boolean,
     var replyCount: Int
-) {
+) : Serializable {
 
     // ReplyData의 하위 개념들
     // 1. 이 댓글이 지지하는 진영

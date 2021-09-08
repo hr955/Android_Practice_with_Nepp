@@ -1,12 +1,13 @@
 package com.example.colosseum_20210903.datas
 
 import org.json.JSONObject
+import java.io.Serializable
 
 class UserData(
     var id: Int,
     var email: String,
     var nickname: String
-) {
+) : Serializable {
 
     constructor() : this(0, "", "")
 
