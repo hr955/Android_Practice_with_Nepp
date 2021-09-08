@@ -310,7 +310,7 @@ class ServerUtil {
         }
 
         // 알림 개수 or 목록까지 가져오기
-        fun getRequestNotificationCountOrList(
+        fun getRequestNotificationList(
             context: Context,
             needList: Boolean,
             handler: JsonResponseHandler?

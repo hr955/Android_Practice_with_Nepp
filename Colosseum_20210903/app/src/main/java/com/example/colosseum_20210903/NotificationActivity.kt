@@ -34,7 +34,7 @@ class NotificationActivity : BaseActivity() {
 
     // 서버에서 알림 목록을 가져오는 함수
     fun getNotificationListFromServer() {
-        ServerUtil.getRequestNotificationCountOrList(
+        ServerUtil.getRequestNotificationList(
             mContext,
             true,
             object : ServerUtil.JsonResponseHandler {

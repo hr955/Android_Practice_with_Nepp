@@ -2,14 +2,12 @@ package com.example.colosseum_20210903
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.colosseum_20210903.adatpers.TopicAdapter
 import com.example.colosseum_20210903.datas.TopicData
 import com.example.colosseum_20210903.datas.UserData
 import com.example.colosseum_20210903.utils.ServerUtil
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.my_custom_action_bar.*
 import org.json.JSONObject
@@ -56,7 +54,7 @@ class MainActivity : BaseActivity() {
         // 서버에서 안읽은 알림 개수 받아오기 -> 화면 들어올때마다 확인
         // 알림개수 0개 -> 빨간 동그라미 숨김처리
         // 1개 이상 -> 빨간 동그라미 보여주기 + 몇개인지 텍스트 설정
-        ServerUtil.getRequestNotificationCountOrList(
+        ServerUtil.getRequestNotificationList(
             mContext,
             false,
             object : ServerUtil.JsonResponseHandler {
