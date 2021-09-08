@@ -1,6 +1,7 @@
 package com.example.colosseum_20210903
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ abstract class BaseActivity : AppCompatActivity() {
             //액션바가 null이 아닐때만 실행시켜줄 코드
             setCustomActionBar()
         }
+
     }
 
     abstract fun setupEvents()
@@ -43,6 +45,11 @@ abstract class BaseActivity : AppCompatActivity() {
         // 세팅이 끝나면, UI들의 이벤트도 달아주자
         backBtn.setOnClickListener {
             finish()
+        }
+
+        // 알림 버튼을 누르면 알림 액티비티로 이동
+        notiBtn.setOnClickListener {
+            startActivity(Intent(mContext, NotificationActivity::class.java))
         }
     }
 }

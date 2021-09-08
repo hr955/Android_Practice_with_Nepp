@@ -34,10 +34,6 @@ class MainActivity : BaseActivity() {
             myIntent.putExtra("TopicData", mTopicList[position])
             startActivity(myIntent)
         }
-
-        notiBtn.setOnClickListener {
-            Toast.makeText(mContext, "알림 보러가기", Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun setValues() {
