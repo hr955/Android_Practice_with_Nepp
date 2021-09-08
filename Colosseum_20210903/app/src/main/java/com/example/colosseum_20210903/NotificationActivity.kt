@@ -55,6 +55,7 @@ class NotificationActivity : BaseActivity() {
 
                     // 알림 확인 처리
                     ServerUtil.postRequestNotificationRead(mContext, mNotificationList[0].id, null)
+
                 }
             })
     }
