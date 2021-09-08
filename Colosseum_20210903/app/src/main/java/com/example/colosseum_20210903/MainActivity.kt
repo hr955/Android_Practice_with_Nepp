@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
 
         // backBtn 숨김처리
         backBtn.visibility = View.GONE
-        notiBtn.visibility = View.VISIBLE
+        notiLayout.visibility = View.VISIBLE
     }
 
     // 서버에서, 메인화면에 보여줄 정보 받아오기
