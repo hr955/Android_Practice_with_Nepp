@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.example.colosseum_20210903.adatpers.ChildReplyAdapter
 import com.example.colosseum_20210903.datas.ReplyData
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
@@ -12,6 +13,8 @@ import org.json.JSONObject
 class ViewReplyDetailActivity : BaseActivity() {
 
     lateinit var mReplyData: ReplyData
+    var mChildReplyData = ArrayList<ReplyData>()
+    lateinit var mChildReplyAdapter: ChildReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,5 +54,18 @@ class ViewReplyDetailActivity : BaseActivity() {
         mReplyData = intent.getSerializableExtra("replyData") as ReplyData
         sideAndNicknameTxt.text = "(${mReplyData.selectedSide.title}) ${mReplyData.writer.nickname}"
         replyContentTxt.text = mReplyData.content
+
+        ServerUtil.getRequestChildReplyList(mContext, mReplyData.id, object : ServerUtil.JsonResponseHandler{
+            override fun onResponse(jsonObj: JSONObject) {
+                super.onResponse(jsonObj)
+
+                // 서버에서 댓글목록 불러와 List 채워주기
+
+            }
+        })
+
+        mChildReplyAdapter = ChildReplyAdapter(mContext, R.layout.child_reply_list_adapter, mChildReplyData)
+        ChildReplyListView.adapter = mChildReplyAdapter
+
     }
 }

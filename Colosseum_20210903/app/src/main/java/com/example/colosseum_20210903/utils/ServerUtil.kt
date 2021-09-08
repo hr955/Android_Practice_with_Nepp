@@ -408,5 +408,37 @@ class ServerUtil {
             })
         }
 
+        // 답글 목록 가져오기
+        fun getRequestChildReplyList(
+            context: Context,
+            parentReplyId: Int,
+            handler: JsonResponseHandler?
+        ) {
+            val url = "${HOST_URL}/topic_reply/${parentReplyId}".toHttpUrlOrNull()!!.newBuilder()
+
+            val urlString = url.toString()
+
+            Log.d("완성된 URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                }
+            })
+        }
     }
 }

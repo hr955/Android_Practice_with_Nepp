@@ -120,7 +120,7 @@
         android:layout_height="match_parent">
 
         <ListView
-            android:id="@+id/replyListView"
+            android:id="@+id/ChildReplyListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
