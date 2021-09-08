@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.load.engine.Resource
 import com.example.colosseum_20210903.R
 import com.example.colosseum_20210903.ViewTopicDetailActivity
 import com.example.colosseum_20210903.datas.ReplyData
@@ -45,7 +47,26 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
 
         createdAtTxt.text = data.getFormattedTimeAgo()
 
-        // 해당 댓글에 좋아오/싫어요 -> 서버에 전송
+        // 내가 댓글에 좋아요/싫어요 찍은 여부를 판단 할 수 있음
+        // data.myLike 등 변수를 활용
+        if (data.myLike) {
+            likeCountTxt.setBackgroundResource(R.drawable.red_border_rect)
+            likeCountTxt.setTextColor(ContextCompat.getColor(mContext, R.color.like_red))
+        } else {
+            likeCountTxt.setBackgroundResource(R.drawable.black_border_rect)
+            likeCountTxt.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+
+        }
+
+        if (data.myHate) {
+            hateCountTxt.setBackgroundResource(R.drawable.blue_border_rect)
+            hateCountTxt.setTextColor(ContextCompat.getColor(mContext, R.color.hate_blue))
+        } else {
+            hateCountTxt.setBackgroundResource(R.drawable.black_border_rect)
+            hateCountTxt.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+        }
+
+        // 해당 댓글에 좋아요/싫어요 -> 서버에 전송
 
         likeCountTxt.tag = true
         hateCountTxt.tag = false
@@ -68,6 +89,11 @@ class ReplyAdapter(val mContext: Context, resId: Int, val mList: List<ReplyData>
 
         likeCountTxt.setOnClickListener(ocl)
         hateCountTxt.setOnClickListener(ocl)
+
+        replyCountTxt.setOnClickListener {
+            // 답글 목록 보는 화면으로 이동
+
+        }
 
         return row
     }
