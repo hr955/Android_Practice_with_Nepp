@@ -1,6 +1,8 @@
 package com.example.colosseum_20210903
 
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.colosseum_20210903.datas.ReplyData
 import com.example.colosseum_20210903.utils.ServerUtil
@@ -37,7 +39,9 @@ class ViewReplyDetailActivity : BaseActivity() {
                     override fun onResponse(jsonObj: JSONObject) {
                         contentEdt.setText("")
 
-                        // 리스트뷰 어댑터에게 변경사항 알려주고 새로고침
+                        // 키보드 숨김처리
+                        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
                     }
                 })
         }
