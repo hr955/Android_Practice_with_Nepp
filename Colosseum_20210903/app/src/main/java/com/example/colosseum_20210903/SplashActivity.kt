@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import com.example.colosseum_20210903.datas.UserData
 import com.example.colosseum_20210903.utils.ContextUtil
+import com.example.colosseum_20210903.utils.ServerUtil
+import org.json.JSONObject
 
 class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +36,18 @@ class SplashActivity : BaseActivity() {
             if (ContextUtil.getAutoLogin(mContext) && ContextUtil.getToken(mContext) != "") {
                 // 둘다 만족 -> 자동로그인 -> 메인화면으로 이동
                 myIntent = Intent(mContext, MainActivity::class.java)
+
+                // 내가 누구인지 정보를 받아와 어느 화면에서든 접근할 수 있게 세팅
+                ServerUtil.getRequestUserData(mContext, object : ServerUtil.JsonResponseHandler{
+                    override fun onResponse(jsonObj: JSONObject) {
+                        val dataObj = jsonObj.getJSONObject("data")
+                        val userObj = dataObj.getJSONObject("user")
+
+                        val loginUserData = UserData.getUserDataFromJson(userObj)
+
+                    }
+                })
+
             } else {
                 myIntent = Intent(mContext, SignInActivity::class.java)
             }

@@ -27,8 +27,14 @@ class ViewReplyDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        // 답글 삭제 -> 리스트뷰의 롱클릭 리스너
+        // 답글 삭제 -> 리스트뷰 롱클릭 리스너
         childReplyListView.setOnItemLongClickListener { adapterView, view, position, l ->
+            // 입력값 검증(validation -> 내가 작성한 답글이 아니라면 함수 강제종료
+
+//            if(){
+//                return@setOnItemLongClickListener true
+//            }
+
             // 경고창
             val alert = AlertDialog.Builder(mContext)
             alert.setMessage("정말 해당 답글을 삭제하시겠습니까?")
