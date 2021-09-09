@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.colosseum_20210903.adatpers.ChildReplyAdapter
 import com.example.colosseum_20210903.datas.ReplyData
+import com.example.colosseum_20210903.utils.GlobalData
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
 import org.json.JSONObject
@@ -30,10 +31,12 @@ class ViewReplyDetailActivity : BaseActivity() {
         // 답글 삭제 -> 리스트뷰 롱클릭 리스너
         childReplyListView.setOnItemLongClickListener { adapterView, view, position, l ->
             // 입력값 검증(validation -> 내가 작성한 답글이 아니라면 함수 강제종료
+            val clickedReply = mChildReplyList[position]
 
-//            if(){
-//                return@setOnItemLongClickListener true
-//            }
+            if(GlobalData.loginUser!!.id != clickedReply.writer.id){
+                Toast.makeText(mContext, "자신이 적은 답글만 삭제할 수 있습니다", Toast.LENGTH_SHORT).show()
+                return@setOnItemLongClickListener true
+            }
 
             // 경고창
             val alert = AlertDialog.Builder(mContext)

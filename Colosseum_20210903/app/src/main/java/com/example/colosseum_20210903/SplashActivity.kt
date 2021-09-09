@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import com.example.colosseum_20210903.datas.UserData
 import com.example.colosseum_20210903.utils.ContextUtil
+import com.example.colosseum_20210903.utils.GlobalData
 import com.example.colosseum_20210903.utils.ServerUtil
 import org.json.JSONObject
 
@@ -38,12 +39,15 @@ class SplashActivity : BaseActivity() {
                 myIntent = Intent(mContext, MainActivity::class.java)
 
                 // 내가 누구인지 정보를 받아와 어느 화면에서든 접근할 수 있게 세팅
-                ServerUtil.getRequestUserData(mContext, object : ServerUtil.JsonResponseHandler{
+                ServerUtil.getRequestUserData(mContext, object : ServerUtil.JsonResponseHandler {
                     override fun onResponse(jsonObj: JSONObject) {
                         val dataObj = jsonObj.getJSONObject("data")
                         val userObj = dataObj.getJSONObject("user")
 
                         val loginUserData = UserData.getUserDataFromJson(userObj)
+
+                        // 서버가 알려준 유저 정보를 모든 화면과 공유 -> GlobalData 활용
+                        GlobalData.loginUser = loginUserData
 
                     }
                 })
