@@ -1,6 +1,8 @@
 package com.example.colosseum_20210903
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -25,6 +27,22 @@ class ViewReplyDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        // 답글 삭제 -> 리스트뷰의 롱클릭 리스너
+        childReplyListView.setOnItemLongClickListener { adapterView, view, position, l ->
+            // 경고창
+            val alert = AlertDialog.Builder(mContext)
+            alert.setMessage("정말 해당 답글을 삭제하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+                // 해당 답글 삭제 -> API 요청 + 새로고침
+
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
+
+            return@setOnItemLongClickListener true
+        }
+
+        // 댓글 입력 버튼
         addReplyBtn.setOnClickListener {
             // 최소 5자 이상 작성 (입력값 검증)
             val inputContent = contentEdt.text.toString()
