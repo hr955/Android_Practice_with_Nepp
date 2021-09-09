@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.colosseum_20210903.datas.UserData
 import com.example.colosseum_20210903.utils.ContextUtil
+import com.example.colosseum_20210903.utils.GlobalData
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import org.json.JSONObject
@@ -65,6 +67,10 @@ class SignInActivity : BaseActivity() {
                         // 서버가 내려주는 토큰값을 기기에 저장 (ContextUtil 활용)
                         val dataObj = jsonObj.getJSONObject("data")
                         val token = dataObj.getString("token")
+
+                        // 로그인시 닉네임 GlobalData에 추가
+                        val userObj = dataObj.getJSONObject("user")
+                        GlobalData.loginUser = UserData.getUserDataFromJson(userObj)
 
                         ContextUtil.setToken(mContext, token)
 
