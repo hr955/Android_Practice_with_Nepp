@@ -63,7 +63,7 @@ class ViewReplyDetailActivity : BaseActivity() {
         getChildRepliesFromServer()
 
         mChildReplyAdapter = ChildReplyAdapter(mContext, R.layout.child_reply_list_adapter, mChildReplyList)
-        ChildReplyListView.adapter = mChildReplyAdapter
+        childReplyListView.adapter = mChildReplyAdapter
 
     }
 
@@ -87,6 +87,9 @@ class ViewReplyDetailActivity : BaseActivity() {
 
                 runOnUiThread {
                     mChildReplyAdapter.notifyDataSetChanged()
+
+                    // 리스트뷰의 최하단(마지막 아이템)으로 이동
+                    childReplyListView.smoothScrollToPosition(mChildReplyList.lastIndex)
                 }
             }
         })

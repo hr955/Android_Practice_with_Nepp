@@ -92,7 +92,7 @@ class ViewTopicDetailActivity : BaseActivity() {
         // getTopicDetailDataFromServer()
 
         mReplyAdapter = ReplyAdapter(mContext, R.layout.reply_list_item, mReplyList)
-        ChildReplyListView.adapter = mReplyAdapter
+        childReplyListView.adapter = mReplyAdapter
     }
 
     // 최신 토론 상세 데이터를 다시 서버에서 불러오기 -> 투표현황 등..
