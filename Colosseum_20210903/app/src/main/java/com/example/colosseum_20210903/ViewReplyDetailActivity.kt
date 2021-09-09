@@ -6,7 +6,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.colosseum_20210903.adatpers.ChildReplyAdapter
 import com.example.colosseum_20210903.datas.ReplyData
-import com.example.colosseum_20210903.datas.TopicData
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
 import org.json.JSONObject
@@ -14,7 +13,7 @@ import org.json.JSONObject
 class ViewReplyDetailActivity : BaseActivity() {
 
     lateinit var mReplyData: ReplyData
-    var mChildReplyData = ArrayList<ReplyData>()
+    var mChildReplyList = ArrayList<ReplyData>()
     lateinit var mChildReplyAdapter: ChildReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +40,16 @@ class ViewReplyDetailActivity : BaseActivity() {
                 mReplyData.id,
                 object : ServerUtil.JsonResponseHandler {
                     override fun onResponse(jsonObj: JSONObject) {
-                        contentEdt.setText("")
 
-                        // 키보드 숨김처리
-                        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                        imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+                        getChildRepliesFromServer()
+
+                        runOnUiThread {
+                            contentEdt.setText("")
+
+                            // 키보드 숨김처리
+                            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+                        }
                     }
                 })
         }
@@ -56,6 +60,14 @@ class ViewReplyDetailActivity : BaseActivity() {
         sideAndNicknameTxt.text = "(${mReplyData.selectedSide.title}) ${mReplyData.writer.nickname}"
         replyContentTxt.text = mReplyData.content
 
+        getChildRepliesFromServer()
+
+        mChildReplyAdapter = ChildReplyAdapter(mContext, R.layout.child_reply_list_adapter, mChildReplyList)
+        ChildReplyListView.adapter = mChildReplyAdapter
+
+    }
+
+    fun getChildRepliesFromServer(){
         ServerUtil.getRequestChildReplyList(mContext, mReplyData.id, object : ServerUtil.JsonResponseHandler{
             override fun onResponse(jsonObj: JSONObject) {
                 super.onResponse(jsonObj)
@@ -65,10 +77,12 @@ class ViewReplyDetailActivity : BaseActivity() {
                 val replyObj = dataObj.getJSONObject("reply")
                 val childReplyArr = replyObj.getJSONArray("replies")
 
+                mChildReplyList.clear() // 중복출력 방지
+
                 for (i in 0 until childReplyArr.length()) {
                     val childReplyObj = childReplyArr.getJSONObject(i)
 
-                    mChildReplyData.add(ReplyData.getReplyDataFromJson(childReplyObj))
+                    mChildReplyList.add(ReplyData.getReplyDataFromJson(childReplyObj))
                 }
 
                 runOnUiThread {
@@ -76,9 +90,5 @@ class ViewReplyDetailActivity : BaseActivity() {
                 }
             }
         })
-
-        mChildReplyAdapter = ChildReplyAdapter(mContext, R.layout.child_reply_list_adapter, mChildReplyData)
-        ChildReplyListView.adapter = mChildReplyAdapter
-
     }
 }
