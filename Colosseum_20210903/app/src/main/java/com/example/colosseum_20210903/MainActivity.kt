@@ -45,6 +45,8 @@ class MainActivity : BaseActivity() {
         backBtn.visibility = View.GONE
         // 알림 버튼 보여주기
         notiLayout.visibility = View.VISIBLE
+        // 프로필 버튼 보여주기
+        profileImg.visibility = View.VISIBLE
 
     }
 
