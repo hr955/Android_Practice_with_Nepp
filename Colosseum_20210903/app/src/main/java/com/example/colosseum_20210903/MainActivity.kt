@@ -32,6 +32,10 @@ class MainActivity : BaseActivity() {
             myIntent.putExtra("TopicData", mTopicList[position])
             startActivity(myIntent)
         }
+
+        profileImg.setOnClickListener {
+            startActivity(Intent(mContext, MyProfileActivity::class.java))
+        }
     }
 
     override fun setValues() {
