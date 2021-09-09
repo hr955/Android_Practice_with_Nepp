@@ -1,5 +1,7 @@
 package com.example.colosseum_20210903
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.colosseum_20210903.adatpers.ReplyAdapter
 import com.example.colosseum_20210903.datas.ReplyData
 import com.example.colosseum_20210903.datas.TopicData
+import com.example.colosseum_20210903.utils.GlobalData
 import com.example.colosseum_20210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_topic_detail.*
 import org.json.JSONObject
@@ -34,6 +37,37 @@ class ViewTopicDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        // 댓글 삭제
+        replyListView.setOnItemLongClickListener { adapterView, view, position, l ->
+            val clickedReply = mReplyList[position]
+
+            // 입력값 검증 -> 댓글 작성자와 사용자의 정보가 일치하는가?
+            if(GlobalData.loginUser!!.id != clickedReply.writer.id){
+                Toast.makeText(mContext, "자신이 작성한 댓글만 삭제할 수 있습니다", Toast.LENGTH_SHORT).show()
+
+                return@setOnItemLongClickListener true
+            }
+
+            val alert = AlertDialog.Builder(mContext)
+            alert.setMessage("정말 해당 댓글을 삭제하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+                // 해당 답글 삭제 -> API 요청 + 새로고침
+                ServerUtil.deleteRequestReply(mContext, clickedReply.id, object : ServerUtil.JsonResponseHandler{
+                    override fun onResponse(jsonObj: JSONObject) {
+                        runOnUiThread{
+                            Toast.makeText(mContext, "답글이 삭제되었습니다", Toast.LENGTH_SHORT).show()
+                        }
+                        getTopicDetailDataFromServer()
+                    }
+                })
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
+
+            return@setOnItemLongClickListener true
+        }
+
         // 첫번째 진영, 두번째 진영 투표버튼의 이벤트
         // 두개의 버튼이 하는일이 거의 동일함 -> 코드를 한번만 짜서, 두개의 버튼에 똑같이 달아주자
         // 버튼이 눌리면 할 일(onClickListener)을 적어두는 변수 (Interface 변수)
@@ -54,15 +88,13 @@ class ViewTopicDetailActivity : BaseActivity() {
                             getTopicDetailDataFromServer()
                         }
                     })
-
-                // 투표를 하고 돌아오면 -> 새로 투표현황 불러오기
-
             }
         }
 
         voteToFirstSideBtn.setOnClickListener(ocl)
         voteToSecondSideBtn.setOnClickListener(ocl)
 
+        // 댓글 등록 버튼
         addReplyBtn.setOnClickListener {
             // 투표를 해야만 댓글 작성 화면으로 이동가능
             // 선택한 진영이 없다면, myIntent 관련 코드 실행 X -> Validation (입력값 검증) 작업
@@ -92,7 +124,7 @@ class ViewTopicDetailActivity : BaseActivity() {
         // getTopicDetailDataFromServer()
 
         mReplyAdapter = ReplyAdapter(mContext, R.layout.reply_list_item, mReplyList)
-        childReplyListView.adapter = mReplyAdapter
+        replyListView.adapter = mReplyAdapter
     }
 
     // 최신 토론 상세 데이터를 다시 서버에서 불러오기 -> 투표현황 등..

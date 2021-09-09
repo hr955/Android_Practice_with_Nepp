@@ -316,7 +316,7 @@ class ServerUtil {
             handler: JsonResponseHandler?
         ) {
             val url = "${HOST_URL}/notification".toHttpUrlOrNull()!!.newBuilder()
-            url.addEncodedQueryParameter("need_all_notis",needList.toString())
+            url.addEncodedQueryParameter("need_all_notis", needList.toString())
 
             val urlString = url.toString()
 
@@ -378,7 +378,12 @@ class ServerUtil {
         }
 
         // 댓글에 답글 달기
-        fun postRequestReplyToParentReply(context: Context, content: String, parentReplyId: Int, handler: JsonResponseHandler?) {
+        fun postRequestReplyToParentReply(
+            context: Context,
+            content: String,
+            parentReplyId: Int,
+            handler: JsonResponseHandler?
+        ) {
             val urlString = "${HOST_URL}/topic_reply"
 
             val formData = FormBody.Builder()
@@ -469,5 +474,38 @@ class ServerUtil {
             })
         }
 
+        // 댓글/답글 삭제
+        fun deleteRequestReply(
+            context: Context,
+            replyId: Int,
+            handler: JsonResponseHandler?
+        ) {
+            val url = "${HOST_URL}/topic_reply".toHttpUrlOrNull()!!.newBuilder()
+            url.addEncodedQueryParameter("reply_id", replyId.toString())
+
+            val urlString = url.toString()
+
+            Log.d("완성된 URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .delete()
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                }
+            })
+        }
     }
 }

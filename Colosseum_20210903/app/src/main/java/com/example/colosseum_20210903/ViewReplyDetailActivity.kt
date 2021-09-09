@@ -34,7 +34,7 @@ class ViewReplyDetailActivity : BaseActivity() {
             val clickedReply = mChildReplyList[position]
 
             if(GlobalData.loginUser!!.id != clickedReply.writer.id){
-                Toast.makeText(mContext, "자신이 적은 답글만 삭제할 수 있습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, "자신이 작성한 답글만 삭제할 수 있습니다", Toast.LENGTH_SHORT).show()
                 return@setOnItemLongClickListener true
             }
 
@@ -43,7 +43,14 @@ class ViewReplyDetailActivity : BaseActivity() {
             alert.setMessage("정말 해당 답글을 삭제하시겠습니까?")
             alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
                 // 해당 답글 삭제 -> API 요청 + 새로고침
-
+                ServerUtil.deleteRequestReply(mContext, clickedReply.id, object : ServerUtil.JsonResponseHandler{
+                    override fun onResponse(jsonObj: JSONObject) {
+                        runOnUiThread{
+                            Toast.makeText(mContext, "답글이 삭제되었습니다", Toast.LENGTH_SHORT).show()
+                        }
+                        getChildRepliesFromServer()
+                    }
+                })
             })
             alert.setNegativeButton("취소", null)
             alert.show()
@@ -94,6 +101,7 @@ class ViewReplyDetailActivity : BaseActivity() {
 
     }
 
+    // 서버에서 댓글 목록을 불러오는 함수
     fun getChildRepliesFromServer(){
         ServerUtil.getRequestChildReplyList(mContext, mReplyData.id, object : ServerUtil.JsonResponseHandler{
             override fun onResponse(jsonObj: JSONObject) {
