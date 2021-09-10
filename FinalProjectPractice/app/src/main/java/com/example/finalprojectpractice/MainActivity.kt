@@ -2,6 +2,7 @@ package com.example.finalprojectpractice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.example.finalprojectpractice.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -10,7 +11,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.testTxt.text = "데이터 바인딩"
     }
 }
